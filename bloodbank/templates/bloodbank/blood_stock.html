@@ -37,11 +37,11 @@
                     <script>
                         var ctx = document.getElementById('myChart1').getContext('2d');
                         var myChart1 = new Chart(ctx, {
-                            type: 'pie',
+                            type: 'bar',
                             data: {
                                 labels: [{% for s in stock %} '{{s.blood_group}}', {% endfor %}],
                         datasets: [{
-                            label: 'Number of Products',
+                            label: 'Stock',
                             data: [{% for s in stock %} {{ s.count }}, {% endfor %}],
                             backgroundColor: [
                                 'rgba(255, 99, 132, 1)',
@@ -85,10 +85,10 @@
                         var myChart = new Chart(ctx, {
                             type: 'bar',
                             data: {
-                                labels: [{% for order in order %} '{{order.name}}',{% endfor %}],
+                                labels: [{% for a, b in groups.items %} '{{a}}',{% endfor %}],
                         datasets: [{
-                            label: 'Orders',
-                            data: [{% for order in order %} {{ order.order_quantity }}, {% endfor %}],
+                            label: 'Donors',
+                            data: [{% for  group, count in groups.items %} {{ count }}, {% endfor %}],
                             backgroundColor: [
                                 'rgba(255, 99, 132, 1)',
                                 'rgba(54, 162, 235, 1)',

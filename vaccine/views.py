@@ -8,8 +8,15 @@ from stocks.models import VaccineStock
 
 def vaccine_stock(request):
     vaccine_stock = VaccineStock.objects.all()
+    needys = VaccineNeedy.objects.all()
+    groups = {}
+    for needy in needys :
+        if needy.needed_vaccine in groups.keys():
+            groups[needy.needed_vaccine] += 1
+        else:
+            groups[needy.needed_vaccine] = 1
 
-    return render(request,"vaccine/vaccine_stock.html", context={'stock':vaccine_stock})
+    return render(request,"vaccine/vaccine_stock.html", context={'stock':vaccine_stock, 'groups': groups})
 
 def vaccine_about(request):
     return render(request,"vaccine/vaccine_about.html")
