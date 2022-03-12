@@ -17,12 +17,13 @@ from django.contrib import admin
 from django.urls import path, include
 from users import views as user_view
 from django.contrib.auth import views as auth_views
-from .views import home_page,load_page, stock_management,mail_sending
+from .views import about_page, home_page,load_page, stock_management,mail_sending
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('',load_page, name='load-page'),
     path('home/', home_page, name='home'),
-    path('',load_page, name='load'),
+    path('about/', about_page, name='about-page'),
     path('stock_management/', stock_management, name='stock-management'),
     path('mail_sending/', mail_sending, name='mail-sending'),
     path('register', user_view.register, name='user-register'),

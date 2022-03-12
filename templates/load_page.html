@@ -29,7 +29,7 @@
         {% include "nav.html" %}
                 <div class="container mx-auto flex flex-col md:flex-row my-12 md:my-20">
             <div class="flex flex-col w-full lg:w-2/5 p-8">
-                <p class="text-3xl md:text-5xl text-yellow-500 my-4 leading-relaxed md:leading-snug">StockNotify</p>
+                <p class="text-3xl md:text-5xl text-yellow-300 my-4 leading-relaxed md:leading-snug"><b>StockNotify</b></p>
                 <p class="font-sans text-sm md:text-lg my-2 md:my-4"><svg class="inline-block fill-current mr-2"
                     xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                     <path
@@ -48,11 +48,8 @@
                 <p class="font-sans text-sm md:text-lg my-2 md:my-4">StockNotify works on two scenarios related to<br>
                 Red Crescent Hospital.<br>1. Blood bank<br> 2. Covid vaccine
                 </p>
-                <br>
                  <div class="flex">
-                <a href="{% url 'user-login' %}"><button class="border-2 border-yellow-600 text-black px-4 py-2 mr-5 rounded-md text-1xl font-medium hover:bg-gray-600 transition duration-300">Login</button></a>
-                <a href="{% url 'user-register' %}"><button class="border-2 border-yellow-600 text-black px-4 py-2 rounded-md text-1xl font-medium hover:bg-gray-600 transition duration-300">Register</button></a>
-
+                <a href="{% url 'about-page' %}"><button class="border-2 border-black text-black px-3 py-1 mr-5 rounded-md text-1xl font-medium hover:bg-gray-600 transition duration-300">Know more</button></a>
                 </div>    
                 </div>
 

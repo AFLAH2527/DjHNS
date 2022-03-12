@@ -1,11 +1,16 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
+
+from DjHNS.decorators import allowed_users
 from .forms import VaccineRegForm
 from .models import VaccineNeedy
 from stocks.models import VaccineStock
 
 # Create your views here.
 
+@login_required(login_url='user-login')
+@allowed_users(allowed_roles = ['admin', 'staff'])
 def vaccine_stock(request):
     vaccine_stock = VaccineStock.objects.all()
     needys = VaccineNeedy.objects.all()
@@ -18,10 +23,11 @@ def vaccine_stock(request):
 
     return render(request,"vaccine/vaccine_stock.html", context={'stock':vaccine_stock, 'groups': groups})
 
+@login_required(login_url='user-login')
 def vaccine_about(request):
     return render(request,"vaccine/vaccine_about.html")
 
-
+@login_required(login_url='user-login')
 def vaccine_reg(request):
     form = VaccineRegForm()
     if request.method == "POST":

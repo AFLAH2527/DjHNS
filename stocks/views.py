@@ -1,10 +1,11 @@
 from django.shortcuts import redirect, render
-
+from django.contrib.auth.decorators import login_required
 from stocks.forms import BloodStockCreateForm, VaccineStockCreateForm
 from stocks.models import BloodStock, VaccineStock
 
 # Create your views here.
 
+@login_required(login_url='user-login')
 def create_bloodstock(request):
     form = BloodStockCreateForm()
     if request.POST:
@@ -15,7 +16,7 @@ def create_bloodstock(request):
 
     return render(request, 'stocks/create_blood.html', context={'form':form})
 
-
+@login_required(login_url='user-login')
 def update_bloodstock(request, id):
     stock = BloodStock.objects.get(id=id)
     old_count = stock.count
@@ -31,6 +32,7 @@ def update_bloodstock(request, id):
             return redirect('/bloodbank/stock')
     return render(request, 'stocks/update_blood.html', context={"form":form})
 
+@login_required(login_url='user-login')
 def create_vaccinestock(request):
     form = VaccineStockCreateForm()
     if request.POST:
@@ -41,6 +43,7 @@ def create_vaccinestock(request):
 
     return render(request, 'stocks/create_vaccine.html', context={'form':form})
 
+@login_required(login_url='user-login')
 def update_vaccinestock(request, id):
     stock = VaccineStock.objects.get(id=id)
     old_count = stock.count

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Vaccines, VaccineNeedy
+from .models import VaccineNeedy
 
 class VaccineRegForm(forms.ModelForm):
     class Meta:
