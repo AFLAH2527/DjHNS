@@ -10,6 +10,7 @@ class BloodGroup(models.Model):
 
 class BloodDonor(models.Model):
     name = models.CharField(max_length=30)
+    email = models.EmailField()
     age = models.IntegerField()
     place = models.CharField(max_length=50)
     blood_group = models.ForeignKey(BloodGroup, on_delete=models.SET_DEFAULT, null=True, default="covishield")

@@ -2,6 +2,8 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from stocks.forms import BloodStockCreateForm, VaccineStockCreateForm
 from stocks.models import BloodStock, VaccineStock
+from vaccine.models import VaccineNeedy
+from django.core.mail import send_mail
 
 # Create your views here.
 
@@ -54,6 +56,28 @@ def update_vaccinestock(request, id):
         if form.is_valid():
             new_stock = form.save(commit=False)
             new_count = new_stock.count
+            count = new_count
+            needies = VaccineNeedy.objects.filter(is_mailed=False, needed_vaccine=stock.vaccine_name).order_by('reg_date')
+            for needy in needies:
+                if count == 0:
+                    break
+                print('Mailing ', needy.email)
+        #         send_mail(
+        #     #SUBJECT
+        #     f'Vaccine is available',
+        #     #BODY
+        #     f'''
+        #     Email Content
+        #     ''',
+        #     #FROM
+        #     'aflahvk2527@gmail.com',
+        #     #TO
+        #     [needy.email],
+        #     fail_silently=False,
+        # )
+                needy.is_mailed = True 
+                needy.save()
+                count -= 1
             new_stock.count += old_count
             new_stock.save()
             return redirect('/vaccine/stock')

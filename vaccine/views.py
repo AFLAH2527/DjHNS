@@ -33,7 +33,9 @@ def vaccine_reg(request):
     if request.method == "POST":
         form = VaccineRegForm(request.POST)
         if form.is_valid():
-            form.save()
+            needy_form = form.save(commit=False)
+            needy_form.email = request.user.email
+            needy_form.save()
             return redirect('home')
 
     context = {

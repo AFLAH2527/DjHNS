@@ -34,7 +34,9 @@ def donor_reg(request):
     if request.method == "POST":
         form = DonorRegForm(request.POST)
         if form.is_valid():
-            form.save()
+            donor_form = form.save(commit=False)
+            donor_form.email = request.user.email
+            donor_form.save()
             return redirect('home')
 
     context = {
