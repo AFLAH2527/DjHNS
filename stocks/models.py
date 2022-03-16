@@ -6,6 +6,8 @@ from vaccine.models import Vaccine
 class BloodStock(models.Model):
     blood_group = models.ForeignKey(BloodGroup, on_delete=models.CASCADE)
     count = models.IntegerField(default=0)
+    min_stock = models.IntegerField(default=5)
+
 
     def __str__(self):
         return f'{self.blood_group}({self.count})'
@@ -13,6 +15,7 @@ class BloodStock(models.Model):
 class VaccineStock(models.Model):
     vaccine_name = models.ForeignKey(Vaccine, on_delete=models.CASCADE)
     count = models.IntegerField(default=0)
+
 
     def __str__(self):
         return f'{self.vaccine_name}({self.count})'
