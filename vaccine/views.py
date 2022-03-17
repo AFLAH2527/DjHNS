@@ -1,3 +1,4 @@
+from itertools import count
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
@@ -33,7 +34,32 @@ def vaccine_reg(request):
     if request.method == "POST":
         form = VaccineRegForm(request.POST)
         if form.is_valid():
-            form.save()
+            reg_user = form.save()
+            current_stock = VaccineStock.objects.get(vaccine_name = reg_user.needed_vaccine)
+            if current_stock.count > 0 :
+                count = current_stock.count
+                # needies = VaccineNeedy.objects.filter(is_mailed=False, needed_vaccine = reg_user.needed_vaccine).order_by('reg_date')
+                # for needy in needies:
+                #     if count == 0:
+                #         break
+                print('Mailing ', reg_user.email)
+        #         send_mail(
+        #     #SUBJECT
+        #     f'Vaccine is available',
+        #     #BODY
+        #     f'''
+        #     Email Content
+        #     ''',
+        #     #FROM
+        #     'aflahvk2527@gmail.com',
+        #     #TO
+        #     [needy.email],
+        #     fail_silently=False,
+        # )
+                reg_user.is_mailed = True 
+                reg_user.save()
+                count -= 1
+                return redirect('home')
             return redirect('home')
 
     context = {
