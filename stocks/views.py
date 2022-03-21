@@ -35,19 +35,19 @@ def update_bloodstock(request, id):
                                 donors = BloodDonor.objects.filter(blood_group=new_stock.blood_group)
                                 for donor in donors:
                                     print('Mailing ', donor.email)
-                            #         send_mail(
-                            #     #SUBJECT
-                            #     f'Vaccine is available',
-                            #     #BODY
-                            #     f'''
-                            #     Email Content
-                            #     ''',
-                            #     #FROM
-                            #     'aflahvk2527@gmail.com',
-                            #     #TO
-                            #     [needy.email],
-                            #     fail_silently=False,
-                            # )
+                                    send_mail(
+                                 #SUBJECT
+                                 f'Subject',
+                                 #BODY
+                                 f'''
+                                 Email Content
+                                 ''',
+                                 #FROM
+                                 'aflahvk2527@gmail.com',
+                                 #TO
+                                 [donor.email],
+                                 fail_silently=False,
+                             )
 
             new_stock.save()
             return redirect('/bloodbank/stock')
