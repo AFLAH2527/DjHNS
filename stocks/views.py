@@ -1,5 +1,6 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
+from bloodbank.models import BloodDonor
 from stocks.forms import BloodStockCreateForm, VaccineStockCreateForm
 from stocks.models import BloodStock, VaccineStock
 from vaccine.models import VaccineNeedy
@@ -30,6 +31,24 @@ def update_bloodstock(request, id):
             new_stock = form.save(commit=False)
             new_count = new_stock.count
             new_stock.count += old_count
+            if new_stock.count <= new_stock.min_stock:
+                                donors = BloodDonor.objects.filter(blood_group=new_stock.blood_group)
+                                for donor in donors:
+                                    print('Mailing ', donor.email)
+                            #         send_mail(
+                            #     #SUBJECT
+                            #     f'Vaccine is available',
+                            #     #BODY
+                            #     f'''
+                            #     Email Content
+                            #     ''',
+                            #     #FROM
+                            #     'aflahvk2527@gmail.com',
+                            #     #TO
+                            #     [needy.email],
+                            #     fail_silently=False,
+                            # )
+
             new_stock.save()
             return redirect('/bloodbank/stock')
     return render(request, 'stocks/update_blood.html', context={"form":form})
