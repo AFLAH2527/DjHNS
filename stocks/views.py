@@ -62,19 +62,19 @@ def update_vaccinestock(request, id):
                 if count == 0:
                     break
                 print('Mailing ', needy.email)
-        #         send_mail(
-        #     #SUBJECT
-        #     f'Vaccine is available',
-        #     #BODY
-        #     f'''
-        #     Email Content
-        #     ''',
-        #     #FROM
-        #     'aflahvk2527@gmail.com',
-        #     #TO
-        #     [needy.email],
-        #     fail_silently=False,
-        # )
+                send_mail(
+             #SUBJECT
+             f'Vaccine is available',
+             #BODY
+             f'''
+             Email Content
+             ''',
+             #FROM
+             'aflahvk2527@gmail.com',
+             #TO
+             [needy.email],
+             fail_silently=False,
+         )
                 needy.is_mailed = True 
                 needy.save()
                 count -= 1
