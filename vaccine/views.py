@@ -2,7 +2,7 @@ from itertools import count
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-
+from django.core.mail import send_mail
 from DjHNS.decorators import allowed_users
 from .forms import VaccineRegForm
 from .models import VaccineNeedy
@@ -35,27 +35,29 @@ def vaccine_reg(request):
         form = VaccineRegForm(request.POST)
         if form.is_valid():
             reg_user = form.save()
+            print(VaccineStock.objects.all())
+            print(reg_user.needed_vaccine)
             current_stock = VaccineStock.objects.get(vaccine_name = reg_user.needed_vaccine)
             if current_stock.count > 0 :
                 count = current_stock.count
-                # needies = VaccineNeedy.objects.filter(is_mailed=False, needed_vaccine = reg_user.needed_vaccine).order_by('reg_date')
-                # for needy in needies:
-                #     if count == 0:
-                #         break
-                print('Mailing ', reg_user.email)
-        #         send_mail(
-        #     #SUBJECT
-        #     f'Vaccine is available',
-        #     #BODY
-        #     f'''
-        #     Email Content
-        #     ''',
-        #     #FROM
-        #     'aflahvk2527@gmail.com',
-        #     #TO
-        #     [needy.email],
-        #     fail_silently=False,
-        # )
+                needies = VaccineNeedy.objects.filter(is_mailed=False, needed_vaccine = reg_user.needed_vaccine).order_by('reg_date')
+                for needy in needies:
+                    if count == 0:
+                        break
+                    print('Mailing ', reg_user.email)
+                    send_mail(
+                #SUBJECT
+                f'Vaccine is available',
+                #BODY
+                f'''
+                Email Content
+                ''',
+                #FROM
+                'aflahvk2527@gmail.com',
+                #TO
+                [needy.email],
+                fail_silently=False,
+            )
                 reg_user.is_mailed = True 
                 reg_user.save()
                 count -= 1

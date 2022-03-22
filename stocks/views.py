@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from bloodbank.models import BloodDonor
-from stocks.forms import BloodStockCreateForm, VaccineStockCreateForm
+from stocks.forms import BloodStockCreateForm, VaccineStockCreateForm,BloodStockUpdateForm, VaccineStockUpdateForm
 from stocks.models import BloodStock, VaccineStock
 from vaccine.models import VaccineNeedy
 from django.core.mail import send_mail
@@ -24,9 +24,9 @@ def update_bloodstock(request, id):
     stock = BloodStock.objects.get(id=id)
     old_count = stock.count
     stock.count = 0
-    form = BloodStockCreateForm(instance=stock)
+    form = BloodStockUpdateForm(instance=stock)
     if request.POST:
-        form = BloodStockCreateForm(request.POST, instance=stock)
+        form = BloodStockUpdateForm(request.POST, instance=stock)
         if form.is_valid():
             new_stock = form.save(commit=False)
             new_count = new_stock.count
@@ -69,9 +69,9 @@ def update_vaccinestock(request, id):
     stock = VaccineStock.objects.get(id=id)
     old_count = stock.count
     stock.count = 0
-    form = VaccineStockCreateForm(instance=stock)
+    form = VaccineStockUpdateForm(instance=stock)
     if request.POST:
-        form = VaccineStockCreateForm(request.POST, instance=stock)
+        form = VaccineStockUpdateForm(request.POST, instance=stock)
         if form.is_valid():
             new_stock = form.save(commit=False)
             new_count = new_stock.count
