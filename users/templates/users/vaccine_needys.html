@@ -7,31 +7,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <style>
-
-        .table {
-        border-spacing: 0 15px;
-    }
-
-    i {
-        font-size: 1rem !important;
-    }
-
-    .table tr {
-        border-radius: 20px;
-    }
-
-    tr td:nth-child(n + 6),
-    tr th:nth-child(n + 6) {
-        border-radius: 0 0.625rem 0.625rem 0;
-    }
-
-    tr td:nth-child(1),
-    tr th:nth-child(1) {
-        border-radius: 0.625rem 0 0 0.625rem;
-    }
-
-    </style>
+    
     <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet"/>
 
     <!-- Bootstrap CSS -->
@@ -52,78 +28,71 @@
 <body>
     {% include 'nav.html' %}
 
-            <div class="flex items-center justify-center min-h-screen bg-white">
-                <div class="col-span-12">
-                    <div class="overflow-auto lg:overflow-visible">
-                    <div class="flex lg:justify-between border-b-2 border-fuchsia-900 pb-1">
-                        <h2 class="text-2xl text-gray-500 font-bold">Vaccine Needys</h2>
+        <!-- component -->
+        <section class="antialiased bg-gray-100 text-gray-600 h-screen px-4">
+            <div class="flex flex-col justify-center h-full">
+                <!-- Table -->
+                <div class="w-full max-w-2xl mx-auto bg-white shadow-lg rounded-sm border border-gray-200">
+                    <header class="px-4 py-4 border-b border-gray-100">
+                        <h2 class="font-semibold text-gray-800">Vaccine Needys</h2>
+                    </header>
+                    <div class="p-3">
+                        <div class="overflow-x-auto">
+                            <table class="table-auto w-full">
+                                <thead class="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
+                                    <tr>
+                                        <th class="p-2 whitespace-nowrap">
+                                            <div class="font-semibold text-left">Name</div>
+                                        </th>
+                                        <th class="p-2 whitespace-nowrap">
+                                            <div class="font-semibold text-left">Age</div>
+                                        </th>
+                                        <th class="p-2 whitespace-nowrap">
+                                            <div class="font-semibold text-left">Email</div>
+                                        </th>
+                                        <th class="p-2 whitespace-nowrap">
+                                            <div class="font-semibold text-left">Vaccine</div>
+                                        </th>
+                                        <th class="p-2 whitespace-nowrap">
+                                            <div class="font-semibold text-center"></div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-sm divide-y divide-gray-100">
 
-                        <div>
-                        <a href="#">
-                            <button
-                            class="
-                                bg-blue-500
-                                hover:bg-blue-700
-                                text-white
-                                py-1
-                                px-3
-                                sm
-                                rounded-full
-                            "
-                            >
-                            All
-                            </button>
-                        </a>
-                        <a href="#">
-                            <button
-                            class="
-                                bg-blue-500
-                                hover:bg-blue-700
-                                text-white
-                                py-1
-                                px-3
-                                sm
-                                rounded-full
-                            "
-                            >
-                            Admin
-                            </button>
-                        </a>
-
-                        <a href="#"><button class="bg-blue-500 hover:bg-blue-700 text-white py-1 px-3 sm rounded-full">User</button></a>
-                        
+                                    {% for vaccine_needy in vaccine_needys %}
+                                    <tr>
+                                        <td class="p-2 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <div class="font-medium text-gray-800">{{ vaccine_needy.name }}</div>
+                                            </div>
+                                        </td>
+                                        <td class="p-2 whitespace-nowrap">
+                                            <div class="text-left">{{ vaccine_needy.age }}</div>
+                                        </td>
+                                        <td class="p-2 whitespace-nowrap">
+                                            <div class="text-left">{{ vaccine_needy.email }}</div>
+                                        </td>
+                                        <td class="p-2 whitespace-nowrap">
+                                            <div class="text-left font-medium text-green-500">{{ vaccine_needy.needed_vaccine }}</div>
+                                        </td>
+                                        <!--<td class="p-2 whitespace-nowrap">
+                                            <div class="text-lg text-center">🇺🇸</div>
+                                        </td>-->
+                                        <td class="p-3 text-right">
+                                            <a class="px-2 py-2 bg-blue-500 mr-1 text-gray-200 text-s font-semibold rounded hover:bg-gray-800" href="#">View</a>
+                                            <a class="px-2 py-2 bg-red-500 text-gray-200 text-s font-semibold rounded hover:bg-gray-800" href="#">Delete</a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                    
+                                </tbody>
+                            </table>
                         </div>
-                    </div>
-                    <table class="table text-gray-400 border-separate space-y-6 text-sm">
-                        <thead class="bg-blue-500 text-white">
-                        <tr>
-                            <th class="p-3">Name</th>
-                            <th class="p-3 text-left">Age</th>
-                            <th class="p-3 text-left">Place</th>
-                            <th class="p-3 text-left">Ref Id</th>
-                            <th class="p-3 text-left">Vaccine</th>
-                            <th class="p-3 text-center"><i class="material-icons-outlined text-base">edit</i></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        
-                            {% for vaccine_needys in vaccine_needys %}
-                            <tr class="bg-blue-200 lg:text-black">
-                                <td class="p-3 font-medium capitalize">{{ vaccine_needys.name }}</td>
-                                <td class="p-3">{{ vaccine_needys.age }}</td>
-                                <td class="p-3">{{ vaccine_needys.place }}</td>
-                                <td class="p-3">{{ vaccine_needys.refid }}</td>
-
-                                <td class="p-3"><span class="bg-green-400 text-gray-50 rounded-md px-2 py-2">{{ vaccine_needys.needed_vaccine }}</span></td>
-                                <td class="p-3 text-right"><a class="px-2 py-2 bg-blue-500 text-gray-200 text-s font-semibold rounded hover:bg-gray-800" href="#">View</td></a>
-                                
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
                     </div>
                 </div>
             </div>
+        </section>
 
 
 
